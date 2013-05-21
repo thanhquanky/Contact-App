@@ -10,6 +10,6 @@
         "querystring": "latest"
     },
     "engines" : {
-        "node" : "latest"
+        "node" : "0.10.6"
     }
 }
