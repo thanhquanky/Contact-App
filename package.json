@@ -1,0 +1,11 @@
+{
+    "name" : "contact-app",
+    "version" : "0.0.1",
+    "author" : "Thanh Ky Quan <thanh@touchbits.com>",
+    "dependencies": {
+        "jade" : "latest",
+        "express" : "latest",
+        "mongoose" : "latest",
+        "querystring": "latest"
+    }
+}

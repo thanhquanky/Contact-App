@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Contact app - Thanh Ky Quan</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/toastr.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="css/toastr.min.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet" media="screen">
+
+</head>
+<body ng-controller='ContactController'>
+	<div class="container-fluid">
+		<div class="navbar row-fluid">
+			<div class="navbar-inner">
+				<a class="text-center brand">Contacts</a>
+			</div>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr class="row-fluid">
+					<th>Name<br/><input type="text" data-ng-model="search.name" class="input-small search-query" name="searchbox-name"/></th>
+					<th>Info<br/><input type="text" data-ng-model="search.$" class="search-query input-large" name="searchbox-all"/></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="row-fluid" data-ng-model="contact" ng-repeat='contact in contacts | filter: search'>
+					<td>{{contact.name}}
+					</td>
+					<td class="">
+						<div class="input-prepend">
+							<label class="control-label">Phone:</label>
+                            <span class="add-on"><i class="icon-mobile-phone"></i></span>
+                            <input type="tel" value="{{contact.phone}}"/>
+						</div>
+                        <br/>
+						<div class="input-prepend">
+							<label class="control-label">Email:</label>
+                            <span class="add-on"><i class="icon-envelope"></i></span>
+                            <input type="email" value="{{contact.email}}"/>
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+        <div class="form-actions">
+            <div class="btn-toolbar pull-right controls-row">
+                <button class="btn-primary" data-toggle="modal" data-target="#newContactModal">Add contact</button>
+            </div>
+        </div>
+    </div>
+    <div id="newContactModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newContactLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="newContactLabel">Add new contact</h3>
+        </div>
+        <div class="modal-body">
+            <form name="newContactForm" novalidate>
+                <div class="control-group">
+                    <div class="input-prepend">
+                        <label class="control-label">Name:</label>
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" data-ng-model="newcontact.name" name="uName" required/>
+                    </div>
+                    <div data-ng-show="newContactForm.uName.$dirty">
+                        <span class="text-error error" ng-show="newContactForm.uName.$error.required">Name is required</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-prepend">
+                        <label class="control-label">Phone:</label>
+                        <span class="add-on"><i class="icon-mobile-phone"></i></span>
+                        <input type="tel" data-ng-model="newcontact.phone" name="uPhone" required/>
+                    </div>
+                    <div data-ng-show="newContactForm.uPhone.$dirty">
+                        <span class="error text-error" data-ng-show="newContactForm.uPhone.$error.required">Phone is required</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-prepend">
+                        <label class="control-label">Email:</label>
+                        <div class="controls">
+                            <span class="add-on"><i class="icon-envelope"></i></span>
+                            <input type="email" data-ng-model="newcontact.email" name="uEmail" required/>
+                        </div>
+                    </div>
+                    <div data-ng-show="newContactForm.uEmail.$dirty">
+                        <span class="text-error error" data-ng-show="newContactForm.uEmail.$error.required">Email is required</span>
+                        <span class="text-error error" data-ng-show="newContactForm.uEmail.$error.email">Email is invalid</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn-danger">Reset</button>
+            <button class="btn btn-primary" data-ng-click="add(newcontact)">Add</button>
+        </div>
+    </div>
+</body>
+</html>

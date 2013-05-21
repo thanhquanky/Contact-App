@@ -1,0 +1,100 @@
+!!! 5
+html(ng-app)
+    head
+        title Contact app - Thanh Ky Quan
+        script(src='http://code.jquery.com/jquery.js')
+        script(src='js/bootstrap.js')
+        script(src='js/angular.js')
+        script(src='js/controllers.js')
+        script(src='js/toastr.js')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+        link(href='css/bootstrap.min.css', rel='stylesheet', media='screen')
+        link(href='css/font-awesome.min.css', rel='stylesheet', media='screen')
+        link(href='css/toastr.min.css', rel='stylesheet', media='screen')
+        link(href='css/style.css', rel='stylesheet', media='screen')
+body(ng-controller='ContactController')
+    div.container-fluid
+        div.navbar.row-fluid
+            .navbar-inner
+                a.text-center.brand Contacts
+        table.table.table-striped.table-bordered
+            thead
+                tr.row-fluid
+                    th
+                        | Name
+                        br
+                        input.input-small.search-query(type='text', data-ng-model='search.name', name='searchbox-name')
+                    th
+                        | Info
+                        br
+                        input.search-query.input-large(type='text', data-ng-model='search.$', name='searchbox-all')
+                tr.row-fluid(data-ng-model='contact', ng-repeat='contact in contacts | filter: search')
+                    td
+                        {{contact.name}}
+                        br
+                        button.btn-danger(data-ng-click='onContactDelete(contact)', data-ng-model='contact') Remove
+                    td
+                      .input-prepend
+                        label.control-label Phone:
+                        span.add-on
+                          i.icon-mobile-phone
+                        input(type='tel', value='{{contact.phone}}', data-ng-model='contact.phone', data-ng-change='onContactChange(contact)')
+                      br
+                      .input-prepend
+                        label.control-label Email:
+                        span.add-on
+                          i.icon-envelope
+                        input(type='email', value='{{contact.email}}', data-ng-model='contact.email', data-ng-change='onContactChange(contact)')
+        .form-actions
+            .btn-toolbar.pull-right.controls-row
+                button.btn-primary(data-toggle='modal', data-target='#newContactModal') Add contact
+
+    #newContactModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='newContactLabel', aria-hidden='true')
+        .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ?
+            h3#newContactLabel Add new contact
+        .modal-body
+            form(name='newContactForm', novalidate='novalidate')
+                .control-group
+                    .input-prepend
+                        label.control-label Name:
+                        span.add-on
+                            i.icon-user
+                        input(type='text', data-ng-model='newcontact.name', name='uName', required='required')
+                    div(data-ng-show='newContactForm.uName.$dirty')
+                        span.text-error.error(ng-show='newContactForm.uName.$error.required') Name is required
+                .control-group
+                    .input-prepend
+                        label.control-label Phone:
+                        span.add-on
+                            i.icon-mobile-phone
+                        input(type='tel', data-ng-model='newcontact.phone', name='uPhone', required='required')
+                    div(data-ng-show='newContactForm.uPhone.$dirty')
+                        span.error.text-error(data-ng-show='newContactForm.uPhone.$error.required') Phone is required
+                .control-group
+                    .input-prepend
+                        label.control-label Email:
+                        .controls
+                            span.add-on
+                                i.icon-envelope
+                            input(type='email', data-ng-model='newcontact.email', name='uEmail', required='required')
+                    div(data-ng-show='newContactForm.uEmail.$dirty')
+                        span.text-error.error(data-ng-show='newContactForm.uEmail.$error.required') Email is required
+                        span.text-error.error(data-ng-show='newContactForm.uEmail.$error.email') Email is invalid
+        .modal-footer
+            button.btn(data-dismiss='modal', aria-hidden='true') Close
+            button.btn-danger Reset
+            button.btn.btn-primary(data-ng-click="$broadcast('AddContact')") Add
+
+    #deleteAlertModal.modal.hide.fade
+        div.modal-header
+            button.close(type="button", data-dismiss="modal", aria-hidden="true") x
+            h3.text-warning Delete contact
+        div.modal-body
+            p.alert-danger
+            | Contact is unrecoverable after deleting.
+            | Do you still want to delete this contact?
+        div.modal-footer
+            a.btn(href="#") Close
+            a.btn.btn-danger(href="#", data-ng-click="$broadcast('DeleteContact')") I want to delete
