@@ -24,8 +24,17 @@ var Contact = mongoose.model('contact', ContactSchema);
 
 var app = express();
 
-/* Connect to database */
-mongoose.connect('mongodb://127.0.0.1/contacts');
+
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/contacts';
+
+
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
 
 /* App configuration */
 app.set('view engine', 'jade');
