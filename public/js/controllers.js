@@ -1,6 +1,6 @@
 
 function ContactController($scope, $http) {
-    var local_address = 'http://128.61.47.29:3000/';
+    var local_address = 'http://localhost:3000/';
     var deletingContact;
     $http.get(local_address + 'contacts/get').success(function(data) {
         $scope.contacts = data;
