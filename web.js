@@ -119,6 +119,6 @@ app.get('/contacts/get', function(req, res) {
 });
 
 /* Listen */
-app.listen(3000);
+app.listen(80);
 
 

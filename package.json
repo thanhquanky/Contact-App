@@ -1,11 +1,15 @@
 {
     "name" : "contact-app",
     "version" : "0.0.1",
-    "author" : "Thanh Ky Quan <thanh@touchbits.com>",
+    "author" : "Thanh Ky Quan",
+    "description": "A simple contact app",
     "dependencies": {
         "jade" : "latest",
         "express" : "latest",
         "mongoose" : "latest",
         "querystring": "latest"
+    },
+    "engines" : {
+        "node" : "latest"
     }
 }
